@@ -6,18 +6,22 @@ More on market neutrality [here](https://www.investopedia.com/terms/m/marketneut
 More on pairs trading [here](https://www.investopedia.com/terms/p/pairstrade.asp).
 More on mean-reversion [here](https://www.investopedia.com/terms/m/meanreversion.asp).
 
+
 ## Objective
 
 Traditional pairs trading methods rely on cointegration / correlation tests alone to choose pairs and typically use OLS estimators to model the spread. The research question of this project is: Can augmenting both steps with machine learning improve the results of the overall strategy?
+
 
 ## Approach
 
 The overall approach is to cluster the pairs using OPTICS, then apply statistical criteria to clustered assets to choose viable pairs. Use LSTM / LSTM Encoder Decoder to model returns and then backtest the overall strategy with completely new data. More details can be found in the implementation details section.
 
+
 ## Pre-requisites
 
 - Polygon API Key (only if you'd like to refetch the data)
 - Python 3.10
+
 
 ## Project Structure
 ```
@@ -26,6 +30,7 @@ The overall approach is to cluster the pairs using OPTICS, then apply statistica
 -notebooks  # Notebooks where we implement all the statistical applications and models
 -utils  # Scripts and other utilities, e.g. to fetch data from Polygon API
 ```
+
 
 ## Getting started
 
@@ -52,6 +57,7 @@ Run the script to refetch the data
 ```
 python3 price_series.py
 ```
+
 
 ## Implementation Details
 

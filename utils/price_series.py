@@ -9,7 +9,12 @@ load_dotenv()
 POLYGON_API_KEY = os.environ.get("POLYGON_API_KEY")
 
 
-def get_all_etf_tickers() -> List[Dict[str, str]]:
+def get_all_tech_tickers() -> List[str]:
+    tech_quotes = pd.read_csv("./data/nasdaq_stock_screener_tech_quotes.csv")
+    nasdaq_tech_tickers = tech_quotes['Symbol'].tolist()
+    return nasdaq_tech_tickers
+
+def get_all_etf_tickers() -> List[str]:
     req_url = f"https://api.polygon.io/v3/reference/tickers?type=ETF&market=stocks&exchange=XNAS&active=true&?date=2023-01-01&limit=1000&apiKey={POLYGON_API_KEY}"
     response = requests.get(req_url)
     if response.status_code == 200:
@@ -57,32 +62,6 @@ def create_etf_dataframe(
     return df
 
 
-def filter_trading_days(df):
+def filter_trading_days(df: pd.DataFrame):
     df = df[df.index.weekday < 5]
     return df
-
-
-etf_list = list(set(get_all_etf_tickers()))
-start_date = "2018-01-01"
-end_date = "2023-01-01"
-
-dfs = []
-rate = 1
-for etf_symbol in etf_list:
-    print(f"Processing: {etf_symbol}\nStatus: {rate}/{len(etf_list)}")
-    price_series = get_price_series(etf_symbol, start_date, end_date)
-    if price_series:
-        timestamps, closing_prices = parse_timeseries(price_series)
-        df = create_etf_dataframe(etf_symbol, timestamps, closing_prices)
-        dfs.append(df)
-    # if rate % 4 == 0:
-    #     time.sleep(60)
-    rate += 1
-
-merged_df = pd.concat(dfs, axis=1)
-
-merged_df = merged_df.sort_index(axis=1)
-
-merged_filtered_df = filter_trading_days(merged_df)
-
-merged_filtered_df.to_csv("../data/etf_prices.csv")

@@ -28,7 +28,8 @@ The overall approach is to cluster the pairs using OPTICS, then apply statistica
 -assets  # Static assets produced by the notebooks, e.g. graphs and visualizations
 -data  # CSV files and pickles to store source and intermediate data
 -notebooks  # Notebooks where we implement all the statistical applications and models
--utils  # Scripts and other utilities, e.g. to fetch data from Polygon API
+-utils  # Utility functions
+-scripts  # Scripts to run workflows, e.g. fetch data from Polygon API
 ```
 
 
@@ -103,3 +104,8 @@ TBD
 
 ### Backtesting Exploratory Data Analysis
 TBD
+
+## Todos:
+- [ ] Add Makefile for scripts
+- [ ] Structure data dir
+- [ ] Clear unused deps and pin versions

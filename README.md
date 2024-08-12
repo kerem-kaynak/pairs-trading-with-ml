@@ -14,7 +14,7 @@ Traditional pairs trading methods rely on cointegration / correlation tests alon
 
 ## Approach
 
-The overall approach is to cluster the pairs using OPTICS, then apply statistical criteria to clustered assets to choose viable pairs. Use LSTM / LSTM Encoder Decoder to model returns and then backtest the overall strategy with completely new data. More details can be found in the implementation details section.
+The overall approach is to cluster the pairs using OPTICS, then apply statistical criteria to clustered assets to choose viable pairs. Use a variety of statistical / machine learning / neural network models to forecast returns and then backtest the overall strategy with completely new data. More details can be found in the implementation details section.
 
 
 ## Pre-requisites
@@ -54,9 +54,11 @@ Create a .env file at the root of the project and place your API key in it
 POLYGON_API_KEY=<your-api-key>
 ```
 
-Run the script to refetch the data
+Run the scripts to refetch the data
 ```
-python3 price_series.py
+python3 scripts/fetch_etf_data.py
+python3 scripts/fetch_etf_data_backtest.py
+python3 scripts/fetch_tech_stock_data.py
 ```
 
 
@@ -94,18 +96,22 @@ python3 price_series.py
 4. Plot Relative Strength Index (RSI) indicators for both series and visualize similarities. More [here](https://www.investopedia.com/terms/r/rsi.asp).
 
 ### Modelling Returns
-TBD
-
-### Return Modelling Results Exploratory Data Analysis
-TBD
+1. Compute spread and spread statistics such as mean and standard deviation.
+2. Construct forecasting and return modelling strategies using multiple methods such as LSTM Encoder Decoder, Random Forest, XGBoost, ARIMA, Prophet and Rolling Linear Regression Trend.
+3. Optimize parameters for ARIMA and Rolling Linear Regression Trend.
+4. Plot price series, signals and positions.
+5. Save results and assets for further inspection, including a comparison table in a CSV for success metrics.
 
 ### Constructing the Trading Strategy and Backtesting
-TBD
+1. Load and preprocess data.
+2. Load trained models from the previous chapter.
+3. Fit the test data (out of sample) into the loaded models and compute success metrics.
+4. Plot results, budget progression and P&L. Save success metrics into a CSV file for further inspection.
 
-### Backtesting Exploratory Data Analysis
-TBD
-
-## Todos:
-- [ ] Add Makefile for scripts
-- [ ] Structure data dir
-- [ ] Clear unused deps and pin versions
+### Backtesting Traditional Model
+1. Load and preprocess data.
+2. Compute spread and spread statistics for the training period.
+3. Compute spread for the testing period.
+4. Using the spread series for the testing period and the spread statistics for the training period, generate signals and positions.
+5. Construct trading model and compute Profit & Loss.
+6. Plot results, budget progression and save results in a CSV file for further inspection.
